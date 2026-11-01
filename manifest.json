@@ -1,0 +1,15 @@
+{
+  "name": "Fichas de Ballynyr",
+  "version": "1.3.0",
+  "manifest_version": 1,
+  "description": "Fichas, rolagens e controle de PV/PD dos personagens do playtest.",
+  "author": "Mesa de Ballynyr",
+  "action": {
+    "title": "Fichas",
+    "icon": "/icon.svg",
+    "popover": "/index.html",
+    "width": 540,
+    "height": 780
+  },
+  "background_url": "/bg.html"
+}

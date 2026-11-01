@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Fichas (fundo)</title></head>
+<body>
+<script type="module">
+import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3/+esm";
+
+const KEY = "rpg.fichas/estado";
+
+if (OBR.isAvailable) {
+  OBR.onReady(async () => {
+    const eu = await OBR.player.getId();
+    const md = await OBR.room.getMetadata();
+    let ultimo = md[KEY]?.rolls?.[0]?.id;
+
+    OBR.room.onMetadataChange(md => {
+      const r = md[KEY]?.rolls?.[0];
+      if (!r || r.id === ultimo) return;
+      ultimo = r.id;
+      if (r.pid === eu) return;
+      let txt = `${r.p} (${r.cn}) — ${r.l}: ${r.t}`;
+      if (r.dm != null) txt += ` · dano ${r.dm}`;
+      if (r.dt != null) txt += r.ok ? " · passou" : " · falhou";
+      OBR.notification.show(txt);
+    });
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Fichas (fundo)</title></head>
+<body>
+<script type="module">
+import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3/+esm";
+
+const P = "rpg.fichas/r.";
+
+// Junta as rolagens de todos os jogadores (cada um grava a sua própria lista).
+const todas = md => Object.entries(md || {})
+  .filter(([k]) => k.startsWith(P))
+  .flatMap(([k, v]) => (v || []).map(r => ({ ...r, pid: k.slice(P.length) })));
+
+if (OBR.isAvailable) {
+  OBR.onReady(async () => {
+    const eu = await OBR.player.getId();
+    const vistos = new Set(todas(await OBR.room.getMetadata()).map(r => r.i));
+
+    // Aviso de turno: quando muda a vez no combate, avisa a mesa (e destaca para o dono do personagem).
+    const sig = md => { const c = (md || {})["rpg.fichas/combat"]; return c && c.on && c.ord && c.ord[c.turn] ? `${c.round}:${c.turn}:${c.ord[c.turn].i}` : ""; };
+    let ultimo = sig(await OBR.room.getMetadata());
+
+    OBR.room.onMetadataChange(md => {
+      const s = sig(md);
+      if (s && s !== ultimo) {
+        const c = md["rpg.fichas/combat"], o = c.ord[c.turn], meu = (md["rpg.fichas/assign"] || {})[eu] === o.i && o.t === "p";
+        OBR.notification.show(meu ? `É a sua vez! — ${o.n} (rodada ${c.round})` : `Rodada ${c.round}: vez de ${o.n}`, meu ? "SUCCESS" : "DEFAULT");
+      }
+      ultimo = s;
+      const novas = todas(md).filter(r => !vistos.has(r.i)).sort((a, b) => a.ts - b.ts);
+      for (const r of novas) {
+        vistos.add(r.i);
+        if (r.pid === eu) continue;
+        let txt = `${r.p}${r.cn ? " (" + r.cn + ")" : ""} — ${r.l}: ${r.t}`;
+        if (r.dm != null) txt += ` · dano ${r.dm}`;
+        if (r.dt != null) txt += r.ok ? " · passou" : " · falhou";
+        OBR.notification.show(txt);
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fichas de Ballynyr</title>
+<style>
+:root{--bg:#1b2423;--bg2:#121918;--giz:#efeadb;--mut:#a3b0a8;--line:#4a5a55;--ouro:#d9b45a;--ruim:#d0654f;--ok:#93c47d}
+*{box-sizing:border-box}
+body{margin:0;padding:0 14px 16px;color:var(--giz);font:15px/1.35 "Arial Narrow","Helvetica Neue",Arial,sans-serif;font-stretch:condensed;
+background:radial-gradient(120% 70% at 85% 0,#2c3b38 0,var(--bg) 55%,var(--bg2)) fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.1;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+#app{position:relative}
+button{font:inherit;color:var(--giz);background:none;border:0;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+.tabs{display:flex;gap:8px;padding:10px 0 4px;overflow-x:auto}
+.av{flex:none;width:46px;height:46px;padding:0;border-radius:50%;overflow:hidden;border:2px solid var(--line);background:#26332f}
+.av img{width:100%;height:100%;object-fit:cover;object-position:50% 6%}
+.av.on{border-color:var(--ouro)}
+.topo{display:grid;grid-template-columns:1fr 190px;gap:8px;align-items:end;margin-top:6px}
+h1{margin:0;font:900 54px/1 Impact,"Arial Black",sans-serif;letter-spacing:2px;text-transform:uppercase;filter:url(#gz);text-shadow:0 0 14px rgba(239,234,219,.3)}
+.sobre{font-size:15px;color:var(--mut);margin:2px 0 8px}
+.nv{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-weight:700;margin-bottom:10px}
+.cl{background:#efeadb2b;border:1px solid var(--giz);padding:1px 10px;text-transform:uppercase}
+.foto{width:190px;max-height:250px;object-fit:contain;object-position:bottom;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
+.attr{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:240px;font:700 27px/1.25 Georgia,serif;font-stretch:normal}
+.dado{display:inline-grid;place-items:center;min-width:28px;height:24px;padding:0 6px;background:#dedacb;color:#161d1c;border-radius:5px;font:700 13px Arial,sans-serif}
+.attr:hover b,.sk:hover span{color:var(--ouro)}
+h2{margin:14px 0 6px;font-size:16px;color:var(--ouro)}
+.vit{display:flex;align-items:center;gap:10px;margin:7px 0}
+.med{flex:none;min-width:62px;font-weight:700}.med b{font-size:30px;margin-left:6px}.med.sm{font-size:14px;min-width:62px}
+.sq{flex:1;display:flex;flex-wrap:wrap;gap:4px}
+.q{width:15px;height:15px;padding:0;border:1px solid var(--giz);border-radius:2px}
+.q.c{background:var(--giz)}.pv .q.c{background:var(--ruim);border-color:var(--ruim)}
+.pl{width:46px;height:15px;padding:0;border:1px solid var(--giz);border-radius:8px}.pl.c{background:var(--giz)}
+.pm{display:flex;gap:4px}.pm button,.opt button{border:1px solid var(--line);border-radius:5px;padding:2px 9px}
+.pm button:hover,.opt button:hover{border-color:var(--ouro)}
+.opt{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0 4px;padding:8px;border:1px dashed var(--line);border-radius:6px}
+.opt input{width:58px;background:#0e1413;color:var(--giz);border:1px solid var(--line);border-radius:5px;padding:3px 6px;font:inherit}
+.opt button.on{background:var(--ouro);border-color:var(--ouro);color:#161d1c}
+.armas{display:grid;gap:5px}
+.armas button{display:flex;justify-content:space-between;padding:5px 10px;border:1px solid var(--ouro);border-radius:5px}
+em{font-style:normal;color:var(--ouro)}
+.cols{column-count:2;column-gap:22px}
+.sk{display:flex;justify-content:space-between;align-items:center;width:100%;padding:3px 0;break-inside:avoid;font-size:17px;font-weight:700;text-align:left}
+.hb{margin-top:14px}
+.faixa{display:flex;justify-content:space-between;align-items:baseline;padding:3px 16px 4px;background:#eee9d9;color:#171e1d;font:900 19px/1.2 "Arial Narrow",Arial,sans-serif;text-transform:uppercase;
+clip-path:polygon(0 20%,1.5% 0,34% 9%,70% 0,99% 12%,100% 64%,98% 100%,60% 90%,25% 100%,1% 86%)}
+.faixa i{font:700 11px Arial,sans-serif}
+.hb p{margin:5px 6px 0;font-size:14px;color:#cfd6cf}
+.dv{display:inline-block;margin:0 4px 3px 0;padding:0 6px;border:1px solid var(--line);border-radius:4px}.dv.u{border-color:var(--ruim);color:var(--ruim)}
+.tot{font-size:20px;color:var(--ouro)}.ok{color:var(--ok)}.no{color:var(--ruim)}
+.lg{border-top:1px solid var(--line);padding:6px 0;font-size:14px}
+.ult{position:sticky;bottom:8px;margin-top:16px;padding:9px 12px;background:#0f1514f2;border:1px solid var(--ouro);border-radius:8px;z-index:5}
+.fim{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--mut);font-size:13px}
+.fim button{border:1px solid var(--line);border-radius:5px;padding:3px 12px;color:var(--giz)}
+.abas{display:flex;gap:4px;padding-top:10px;border-bottom:1px solid var(--line)}
+.aba{padding:6px 14px;font-weight:700;font-size:17px;border-bottom:3px solid transparent;margin-bottom:-1px}
+.aba.on{border-color:var(--ouro);color:var(--ouro)}
+.pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pd{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.pd span{display:flex;flex-direction:column;align-items:center;line-height:1.1}.pd em{font-size:22px;font-weight:700;color:var(--giz)}
+.pd button{border:1px solid var(--line);border-radius:5px;width:32px;height:32px}.pd button:hover,.big:hover{border-color:var(--ouro)}
+.opt input[type=text]{width:190px}
+.big{border:1px solid var(--ouro);border-radius:5px;padding:4px 16px;font-weight:700}
+select{background:#0e1413;color:var(--giz);border:1px solid var(--line);border-radius:5px;padding:5px 6px;font:inherit}
+.pj{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.prato{max-width:480px;margin:14px auto 2px}
+.prato svg{display:block;width:100%;height:auto}
+.pcap{text-align:center;color:var(--mut);font-size:13px;margin-top:2px;min-height:18px}
+.nm{font-family:Arial,sans-serif;font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.vl{fill:#f1ede4;font-family:Arial,sans-serif;font-weight:700;text-anchor:middle;pointer-events:none}
+.dd.x2 .rt *{stroke:#ffd35a;stroke-width:3}
+.sub{color:var(--mut);font-size:13px}.hr{color:var(--mut);font-size:12px;margin-left:6px}
+.vazio{margin:48px 12px;text-align:center;color:var(--mut);font-size:17px}
+.aviso{color:var(--ruim);margin:6px 0}
+@media (max-width:440px){.topo{grid-template-columns:1fr 130px}.foto{width:130px}h1{font-size:40px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="gz"><feTurbulence type="fractalNoise" baseFrequency=".04 .9" numOctaves="2" seed="3" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="4"/></filter></svg>
+<div id="app">Carregando…</div>
+<script type="module">
+import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3/+esm";
+import { FICHAS } from "./fichas.js";
+
+const P = "rpg.fichas/";
+const $app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const sinal = n => (n > 0 ? "+" : "") + n;
+
+let st = { chars: {}, assign: {}, rolls: [] };
+let party = [];
+let player = { id: "local", name: "Jogador", role: "GM" };
+let curId = null;
+try { curId = localStorage.getItem(P + "atual"); } catch {}
+if (!FICHAS.some(f => f.id === curId)) curId = FICHAS[0].id;
+const ui = { recv: {}, anim: new Set(), tm: null, tab: "ficha", extra: { 4: 0, 6: 0, 8: 0 }, dt: "", pool: {}, mod: "", lab: "", aviso: "", filtro: "" };
+
+const gm = () => player.role === "GM";
+const cur = () => FICHAS.find(f => f.id === (gm() ? curId : st.assign[player.id]));
+const estado = f => { const c = st.chars[f.id] || {}; return { pv: c.pv ?? f.pv, pd: c.pd ?? f.pd, r: c.r ?? 0 }; };
+const setChar = (f, patch) => { st.chars[f.id] = { ...estado(f), ...patch }; };
+const patchChar = f => ({ [P + "c." + f.id]: st.chars[f.id] });
+
+function lerEstado(md) {
+  const o = { chars: {}, assign: {}, rolls: [] };
+  for (const [k, v] of Object.entries(md || {})) {
+    if (!k.startsWith(P)) continue;
+    const n = k.slice(P.length);
+    if (n === "assign") o.assign = v || {};
+    else if (n.startsWith("c.")) o.chars[n.slice(2)] = v;
+    else if (n.startsWith("r.")) o.rolls.push(...(v || []).map(r => ({ ...r, pid: n.slice(2) })));
+  }
+  o.rolls.sort((a, b) => b.ts - a.ts);
+  o.rolls.length = Math.min(o.rolls.length, 40);
+  return o;
+}
+
+function marcar(inicial) { for (const e of st.rolls) if (!(e.i in ui.recv)) ui.recv[e.i] = inicial ? 0 : Date.now(); }
+
+async function salvar(patch) {
+  render();
+  if (!OBR.isAvailable) return;
+  try { await OBR.room.setMetadata(patch); }
+  catch (e) { OBR.notification.show("Não foi possível salvar: " + (e?.message || e), "ERROR"); }
+}
+
+// ---------- Prato de dados ----------
+// Geometria (unidades do SVG): hexágono de topo plano. O prato tem moldura (R_OUT), feltro (R_IN)
+// e, no modelo do arco, uma zona central (R_C) em que o valor do dado conta em dobro.
+const R_OUT = 200, R_IN = 168, R_C = 84, S3 = Math.sqrt(3);
+const APO = R => R * S3 / 2;
+const dentroHex = (x, y, R) => Math.abs(y) <= APO(R) && S3 * Math.abs(x) + Math.abs(y) <= S3 * R;
+const mixc = (h, t, k) => {
+  const a = parseInt(h.slice(1), 16), b = parseInt(t.slice(1), 16);
+  const c = s => Math.round(((a >> s) & 255) * (1 - k) + ((b >> s) & 255) * k);
+  return "#" + [16, 8, 0].map(s => c(s).toString(16).padStart(2, "0")).join("");
+};
+const reduz = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Sorteia onde cada dado cai: posição uniforme dentro do feltro, sem sobrepor os outros, e giro livre.
+function lancar(n) {
+  const M = 27, Re = R_IN - 2 * M / S3, out = [];
+  const ponto = () => { for (;;) { const x = (Math.random() * 2 - 1) * Re, y = (Math.random() * 2 - 1) * APO(Re); if (dentroHex(x, y, Re)) return [x, y]; } };
+  for (let i = 0; i < n; i++) {
+    let p = null;
+    for (let k = 0; k < 400 && !p; k++) {
+      const [x, y] = ponto(), lim = k < 250 ? 54 : 40;
+      if (out.every(q => Math.hypot(q.x - x, q.y - y) >= lim)) p = { x: Math.round(x), y: Math.round(y) };
+    }
+    if (!p) { const [x, y] = ponto(); p = { x: Math.round(x), y: Math.round(y) }; }
+    p.rot = Math.floor(Math.random() * 360);
+    out.push(p);
+  }
+  return out;
+}
+
+const hexPts = R => [0, 1, 2, 3, 4, 5].map(i => { const a = Math.PI / 3 * i; return `${(R * Math.cos(a)).toFixed(1)},${(R * Math.sin(a)).toFixed(1)}`; }).join(" ");
+const polig = (n, R, rot = -90) => Array.from({ length: n }, (_, i) => { const a = (rot + 360 / n * i) * Math.PI / 180; return `${(R * Math.cos(a)).toFixed(1)},${(R * Math.sin(a)).toFixed(1)}`; }).join(" ");
+
+function dadoSvg(d, c, gid) {
+  const S = `fill="url(#${gid})" stroke="${c.e}" stroke-width="2" stroke-linejoin="round"`;
+  const L = pts => `<polygon points="${pts}" fill="none" stroke="${c.e}" stroke-opacity=".4" stroke-width="1"/>`;
+  switch (d) {
+    case 4: return `<polygon points="${polig(3, 26)}" ${S}/>${L(polig(3, 12, 90))}`;
+    case 6: return `<rect x="-20" y="-20" width="40" height="40" rx="8" ${S}/>`;
+    case 8: return `<polygon points="${polig(4, 27, 0)}" ${S}/>${L(polig(4, 13, 45))}`;
+    case 12: return `<polygon points="${polig(5, 26)}" ${S}/>${L(polig(5, 13, 90))}`;
+    case 20: return `<polygon points="${polig(6, 26, 0)}" ${S}/>${L(polig(3, 13))}`;
+    default: return `<polygon points="0,-28 22,-5 0,26 -22,-5" ${S}/><polyline points="-22,-5 0,-12 22,-5" fill="none" stroke="${c.e}" stroke-opacity=".4"/>`;
+  }
+}
+
+let pratoN = 0;
+const prato = { key: null, el: document.createElement("div") };
+prato.el.className = "prato";
+
+function setNum(o, n) { o.nm.textContent = n; o.nm.setAttribute("font-size", String(n).length > 1 ? 14 : 17); }
+
+function pose(o, u, now) {
+  const q = Math.pow(1 - u, 2.4);
+  const x = o.x + (o.sx - o.x) * q, y = o.y + (o.sy - o.y) * q;
+  const z = u >= 1 ? 0 : Math.pow(1 - u, 1.3) * Math.abs(Math.cos(u * Math.PI * 2.6));
+  o.g.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(1 + .55 * z).toFixed(3)})`);
+  o.rt.setAttribute("transform", `rotate(${(o.rot + o.spin * (1 - u) * (1 - u)).toFixed(1)})`);
+  o.sh.setAttribute("transform", `translate(${(z * 8).toFixed(1)} ${(z * 20 + 2).toFixed(1)})`);
+  o.sh.setAttribute("opacity", (.32 - .18 * z).toFixed(2));
+  if (u < .72) { if (now - o.last > 70) { o.last = now; setNum(o, 1 + Math.floor(Math.random() * o.d)); } }
+  else if (o.nm.textContent !== String(o.v)) setNum(o, o.v);
+}
+
+// Lança os dados a partir da borda de baixo: voam, quicam, giram e vão freando até a posição sorteada.
+function animar(dice, fim) {
+  const t0 = performance.now(), DUR = 1300;
+  dice.forEach((o, i) => { o.delay = i * 90; o.sx = Math.round(o.x * .25 + (Math.random() * 2 - 1) * 70); o.sy = 138; o.spin = (Math.random() < .5 ? -1 : 1) * (540 + Math.random() * 540); o.last = 0; o.g.setAttribute("opacity", 0); pose(o, 0, t0); });
+  const frame = now => {
+    let vivo = false;
+    for (const o of dice) {
+      const u = Math.min(1, Math.max(0, (now - t0 - o.delay) / DUR));
+      if (now - t0 >= o.delay) o.g.setAttribute("opacity", 1);
+      if (u < 1) vivo = true;
+      pose(o, u, now);
+    }
+    if (vivo) requestAnimationFrame(frame); else fim();
+  };
+  requestAnimationFrame(frame);
+}
+
+function montarPrato(f, roll, animado) {
+  const arma = f.armas[roll ? roll.w : 0] || f.armas[0], arco = arma[3] === "arco";
+  const c = f.cor, id = "pr" + (++pratoN);
+  const mad = arco ? "#3b3836" : c.m;
+  const madC = mixc(mad, "#ffffff", arco ? .12 : .22), madE = mixc(mad, "#000000", .28);
+  const dc = { d: c.d, e: mixc(c.d, "#000000", .5), n: c.n };
+  const dados = (roll ? roll.r : []).filter(x => Number.isFinite(x[2]) && Number.isFinite(x[3]));
+  const apoM = (APO(R_OUT) + APO(R_IN)) / 2;
+  let ranhuras = "";
+  for (let i = 0; i < 6; i++) for (const off of [-56, 0, 56]) ranhuras += `<rect transform="rotate(${30 + 60 * i})" x="${(apoM - 3.5).toFixed(1)}" y="${off - 12}" width="7" height="24" rx="1" fill="${mixc(mad, "#000000", .7)}" opacity=".85"/>`;
+  const centro = arco
+    ? `<polygon points="${hexPts(R_C)}" fill="${mixc(c.f, "#000000", .4)}" fill-opacity=".8" stroke="#fff" stroke-opacity=".14" stroke-width="2"/>
+       <circle r="27" fill="#2c2b2d" fill-opacity=".92"/><text class="vl" y="-5" font-size="8.5" style="letter-spacing:.8px">VALOR</text><text class="vl" y="14" font-size="20">x2</text>`
+    : `<g fill="none" stroke="#fff" stroke-opacity=".11" stroke-width="3"><polygon points="${hexPts(46)}"/><circle r="17"/></g>`;
+  const pecas = dados.map(([d, , , , , k]) => `<g class="dd" opacity="0"><ellipse class="sh" rx="19" ry="11" fill="#000" opacity=".3"/><g class="rt">${dadoSvg(d, dc, id + "d")}</g><text class="nm" fill="${dc.n}" y="${d === 4 ? 5 : 0}"></text>${k > 1 ? `<g class="bd" opacity="0"><circle cx="17" cy="-21" r="10" fill="#ffd35a" stroke="#6b4b00" stroke-width="1.5"/><text class="vl" x="17" y="-21" font-size="10" style="fill:#3a2800;dominant-baseline:central">×${k}</text></g>` : ""}</g>`).join("");
+  prato.el.innerHTML = `<svg viewBox="-206 -182 412 378" role="img" aria-label="Prato de dados de ${esc(f.n1)}${arco ? ", dados no centro valem o dobro" : ""}">
+  <defs>
+    <linearGradient id="${id}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${madC}"/><stop offset="1" stop-color="${madE}"/></linearGradient>
+    <radialGradient id="${id}f" cx=".5" cy=".45" r=".7"><stop offset="0" stop-color="${mixc(c.f, "#ffffff", .14)}"/><stop offset="1" stop-color="${mixc(c.f, "#000000", .32)}"/></radialGradient>
+    <radialGradient id="${id}d" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="${mixc(dc.d, "#ffffff", .4)}"/><stop offset=".55" stop-color="${dc.d}"/><stop offset="1" stop-color="${mixc(dc.d, "#000000", .3)}"/></radialGradient>
+    <filter id="${id}s" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#000" flood-opacity=".5"/></filter>
+    <filter id="${id}n" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="5"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 -.2"/></filter>
+    <clipPath id="${id}c"><polygon points="${hexPts(R_IN)}"/></clipPath>
+  </defs>
+  <polygon points="${hexPts(R_OUT)}" transform="translate(0 12)" fill="${mixc(mad, "#000000", .45)}" filter="url(#${id}s)"/>
+  <polygon points="${hexPts(R_OUT)}" fill="url(#${id}w)" stroke="${madE}" stroke-width="2"/>
+  ${ranhuras}
+  <polygon points="${hexPts(R_IN + 4)}" fill="${mixc(mad, "#000000", .5)}"/>
+  <polygon points="${hexPts(R_IN)}" fill="url(#${id}f)"/>
+  <g clip-path="url(#${id}c)"><rect x="-170" y="-150" width="340" height="300" filter="url(#${id}n)" opacity=".16"/></g>
+  <polygon points="${hexPts(R_IN)}" fill="none" stroke="${mixc(c.f, "#000000", .55)}" stroke-width="5" opacity=".55"/>
+  ${centro}
+  <g class="dados">${pecas}</g>
+</svg><div class="pcap"></div>`;
+  const cap = prato.el.querySelector(".pcap");
+  const gs = [...prato.el.querySelectorAll(".dd")];
+  const objs = dados.map(([d, v, x, y, rot, k], i) => ({ d, v, x, y, rot, k: k || 1, g: gs[i], rt: gs[i].querySelector(".rt"), sh: gs[i].querySelector(".sh"), nm: gs[i].querySelector(".nm"), bd: gs[i].querySelector(".bd"), last: 0, sx: x, sy: y, spin: 0 }));
+  const resumo = roll ? `${arma[0]} — total ${roll.t} · RA ${roll.a}${roll.dm != null ? " · dano " + roll.dm : ""}` : (arco ? "Dados que caírem no centro valem ×2. Faça um ataque." : "Faça um ataque para lançar os dados.");
+  const fim = () => {
+    for (const o of objs) { pose(o, 1, 0); o.g.setAttribute("opacity", 1); if (o.k > 1) { o.g.classList.add("x2"); o.bd.setAttribute("opacity", 1); } }
+    cap.textContent = resumo;
+  };
+  if (animado && objs.length) { cap.textContent = arma[0] + " — lançando…"; animar(objs, fim); } else fim();
+}
+
+// Mantém um único prato por ficha: só é refeito (e animado) quando chega um ataque novo.
+function sincPrato(f) {
+  const roll = st.rolls.find(e => e.c === f.id && e.w != null && Array.isArray(e.r));
+  const key = f.id + ":" + (roll ? roll.i : "-");
+  if (prato.key === key) return;
+  prato.key = key;
+  const fresco = !!roll && ui.recv[roll.i] > 0 && Date.now() - ui.recv[roll.i] < 4000 && !ui.anim.has(roll.i) && !reduz;
+  if (roll) ui.anim.add(roll.i);
+  prato.rolar = fresco && roll.pid === player.id;
+  montarPrato(f, roll, fresco);
+}
+
+function rolar(label, dados, opts = {}) {
+  const f = opts.free ? null : cur();
+  const extras = [];
+  if (!opts.free) for (const d of [4, 6, 8]) for (let i = 0; i < ui.extra[d]; i++) extras.push(d);
+  const tipos = [...dados, ...extras];
+  const m = opts.mod || 0;
+  const ts = Date.now();
+  let r;
+  if (opts.w != null) {
+    // Ataque: o sorteio inclui ONDE cada dado cai. No prato do arco, o dado que cai no centro vale o dobro.
+    const pos = lancar(tipos.length);
+    r = tipos.map((d, i) => {
+      const k = opts.arco && dentroHex(pos[i].x, pos[i].y, R_C) ? 2 : 1;
+      const a = [d, 1 + Math.floor(Math.random() * d), pos[i].x, pos[i].y, pos[i].rot];
+      if (k > 1) a.push(k);
+      return a;
+    });
+  } else r = tipos.map(d => [d, 1 + Math.floor(Math.random() * d)]);
+  const v = r.map(x => x[1] * (x[5] || 1));
+  const e = { i: ts + "-" + Math.floor(Math.random() * 1e4), ts, pid: player.id, p: player.name, cn: f ? f.n1 : "", l: label, r, t: v.reduce((a, b) => a + b, 0) + m };
+  if (opts.w != null) { e.c = f.id; e.w = opts.w; }
+  if (m) e.m = m;
+  if (!opts.free) { e.a = Math.max(...v); e.b = Math.min(...v); }
+  if (opts.dm != null) e.dm = e.a + opts.dm;
+  const patch = {};
+  const dt = parseInt(ui.dt, 10);
+  if (f && !isNaN(dt)) {
+    e.dt = dt; e.ok = e.t >= dt;
+    if (!e.ok && f.res?.k === "impeto") {
+      const c = estado(f);
+      if (c.r < f.res.max) { setChar(f, { r: c.r + 1 }); e.im = 1; Object.assign(patch, patchChar(f)); }
+    }
+  }
+  if (!opts.free) ui.extra = { 4: 0, 6: 0, 8: 0 };
+  st.rolls.unshift(e);
+  ui.recv[e.i] = ts;
+  const minhas = st.rolls.filter(x => x.pid === player.id).slice(0, 6).map(({ pid, ...x }) => x);
+  while (minhas.length > 1 && JSON.stringify(minhas).length > 1500) minhas.pop(); // limite de 16 kB da sala
+  patch[P + "r." + player.id] = minhas;
+  salvar(patch);
+}
+
+const rolHtml = (e, hora) => `<div><b>${esc(e.p)}</b>${e.cn ? ` · ${esc(e.cn)}` : ""} — ${esc(e.l)}${hora ? `<span class="hr">${new Date(e.ts).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</span>` : ""}</div><div>${e.r.map(([d, v, , , , k]) => `<span class="dv ${v === 1 ? "u" : ""}">d${d}: ${v}${k > 1 ? "×" + k : ""}</span>`).join("")}${e.m ? ` <b>${e.m > 0 ? "+" : "−"}${Math.abs(e.m)}</b> ` : ""}= <b class="tot">${e.t}</b>${e.a != null ? ` · RA ${e.a} · RB ${e.b}` : ""}${e.dm != null ? ` · dano <b class="tot">${e.dm}</b>` : ""}${e.dt != null ? ` · DT ${e.dt} <b class="${e.ok ? "ok" : "no"}">${e.ok ? "passou" : "falhou"}</b>` : ""}${e.im ? " · +1 ímpeto" : ""}</div>`;
+
+function fichaHtml(f) {
+  const c = estado(f);
+  const quad = (k, val, max) => Array.from({ length: max }, (_, i) => `<button class="q ${i < val ? "c" : ""}" data-a="set" data-k="${k}" data-v="${i + 1}" aria-label="${k.toUpperCase()} ${i + 1}"></button>`).join("");
+  const vit = (k, rot, val, max) => `<div class="vit ${k}"><div class="med">${rot}<b>${val}</b></div><div class="sq">${quad(k, val, max)}</div><div class="pm"><button data-a="hp" data-k="${k}" data-n="-1" aria-label="Diminuir ${rot}">−</button><button data-a="hp" data-k="${k}" data-n="1" aria-label="Aumentar ${rot}">+</button></div></div>`;
+  const res = f.res ? `<div class="vit"><div class="med sm">${esc(f.res.n)}</div><div class="sq">${Array.from({ length: f.res.max }, (_, i) => `<button class="pl ${i < c.r ? "c" : ""}" data-a="rset" data-v="${i + 1}" aria-label="${esc(f.res.n)} ${i + 1}"></button>`).join("")}</div></div>` : "";
+  return `${gm() ? `<nav class="tabs" aria-label="Personagens">${FICHAS.map(x => `<button class="av ${x.id === f.id ? "on" : ""}" data-a="pick" data-id="${x.id}" title="${esc(x.n1)}" aria-label="${esc(x.n1)}"><img src="${x.foto}" alt=""></button>`).join("")}</nav>` : ""}
+  <header class="topo"><div>
+    <h1>${esc(f.n1)}</h1><div class="sobre">${esc(f.n2)}</div>
+    <div class="nv"><span>NÍVEL 3</span><span class="cl">${esc(f.cl)}</span><span>${esc(f.sub)}</span></div>
+    ${Object.entries(f.at).map(([n, d]) => `<button class="attr" data-a="at" data-n="${n}"><b>${n}</b><span class="dado">d${d}</span></button>`).join("")}
+  </div><img class="foto" src="${f.foto}" alt="${esc(f.n1)}"></header>
+  ${vit("pv", "PV", c.pv, f.pv)}${vit("pd", "PD", c.pd, f.pd)}${res}
+  <div class="opt"><label>DT <input type="number" id="dt" value="${esc(ui.dt)}" placeholder="—"></label>
+  ${[4, 6, 8].map(d => `<button data-a="ex" data-d="${d}" class="${ui.extra[d] ? "on" : ""}">+d${d}${ui.extra[d] ? " ×" + ui.extra[d] : ""}</button>`).join("")}
+  <button data-a="exclr">limpar</button></div>
+  <h2>Ataques</h2>
+  <div class="armas">${f.armas.map((w, i) => `<button data-a="atk" data-i="${i}">${esc(w[0])}<em>${w[1]} · RA${w[2] >= 0 ? "+" : ""}${w[2]}</em></button>`).join("")}</div>
+  <div id="trayslot"></div>
+  <h2>Perícias</h2>
+  <div class="cols">${f.sk.map((s, i) => `<button class="sk" data-a="sk" data-i="${i}"><span>${esc(s[0])}</span><span class="dado">d${s[1]}+d${s[2]}</span></button>`).join("")}</div>
+  ${f.hab.map(h => `<div class="hb"><div class="faixa"><b>${esc(h[0])}</b><i>${esc(h[1])}</i></div><p>${esc(h[2])}</p></div>`).join("")}
+  <div class="fim"><span>RA = maior dado · RB = menor dado</span><button data-a="rest">Descansar</button></div>`;
+}
+
+const DADOS = [4, 6, 8, 10, 12, 20, 100];
+const descPool = () => DADOS.filter(d => ui.pool[d]).map(d => `${ui.pool[d]}d${d}`).join(" + ");
+function dadosHtml() {
+  const mod = parseInt(ui.mod, 10) || 0;
+  return `<h2>Rolagem livre</h2>
+  <div class="pool">${DADOS.map(d => `<div class="pd"><button data-a="pm" data-d="${d}" data-n="-1" aria-label="Menos d${d}">−</button><span><b>d${d}</b><em>${ui.pool[d] || 0}</em></span><button data-a="pm" data-d="${d}" data-n="1" aria-label="Mais d${d}">+</button></div>`).join("")}</div>
+  <div class="sub" style="margin:10px 0 0">${descPool() ? esc(descPool() + (mod ? " " + sinal(mod) : "")) : "Escolha os dados acima."}</div>
+  <div class="opt"><label>Bônus <input type="number" id="mod" value="${esc(ui.mod)}" placeholder="0"></label>
+  <input type="text" id="lab" value="${esc(ui.lab)}" placeholder="Descrição (opcional)" maxlength="40">
+  <button class="big" data-a="free">Rolar</button><button data-a="poolclr">limpar</button></div>
+  ${ui.aviso ? `<div class="aviso">${esc(ui.aviso)}</div>` : ""}`;
+}
+
+function mesaHtml() {
+  const nomes = [...new Map(st.rolls.map(e => [e.pid, e.p]))];
+  const lista = st.rolls.filter(e => !ui.filtro || e.pid === ui.filtro);
+  return `<h2>Rolagens da mesa</h2>
+  <div class="row-f" style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+  <select data-change="filtro" aria-label="Filtrar por jogador"><option value="">Todos os jogadores</option>${nomes.map(([id, n]) => `<option value="${esc(id)}" ${ui.filtro === id ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>
+  ${gm() ? `<button class="big" data-a="limpar" style="border-color:var(--line);font-weight:400">Limpar histórico</button>` : ""}</div>
+  ${lista.map(e => `<div class="lg">${rolHtml(e, true)}</div>`).join("") || `<div class="vazio">Nenhuma rolagem ainda.</div>`}`;
+}
+
+function mestreHtml() {
+  const jog = party.filter(p => p.role !== "GM");
+  const idsOn = new Set(jog.map(p => p.id));
+  const off = Object.keys(st.assign).filter(id => !idsOn.has(id)).map(id => ({ id, name: "Jogador desconectado (" + id.slice(0, 4) + ")" }));
+  const linha = p => {
+    const ch = FICHAS.find(f => f.id === st.assign[p.id]);
+    const c = ch && estado(ch);
+    return `<div class="pj"><div><b>${esc(p.name)}</b><div class="sub">${ch ? `${esc(ch.n1)} · PV ${c.pv}/${ch.pv} · PD ${c.pd}/${ch.pd}` : "sem ficha"}</div></div>
+    <select data-change="atrib" data-p="${esc(p.id)}" aria-label="Ficha de ${esc(p.name)}"><option value="">— nenhuma —</option>${FICHAS.map(f => `<option value="${f.id}" ${f.id === st.assign[p.id] ? "selected" : ""}>${esc(f.n1)}</option>`).join("")}</select></div>`;
+  };
+  return `<h2>Atribuir fichas</h2><p class="sub">Cada jogador só enxerga a ficha atribuída a ele. Você, como mestre, vê todas na aba Ficha.</p>
+  ${[...jog, ...off].map(linha).join("") || `<div class="vazio">Nenhum jogador na sala ainda. Quando entrarem, aparecem aqui.</div>`}`;
+}
+
+function render() {
+  const a = document.activeElement, fid = a && a.id, pos = a && a.selectionStart;
+  const abas = [["ficha", "Ficha"], ["dados", "Dados"], ["mesa", "Mesa"], ...(gm() ? [["mestre", "Mestre"]] : [])];
+  if (ui.tab === "mestre" && !gm()) ui.tab = "ficha";
+  const f = cur();
+  let corpo;
+  if (ui.tab === "ficha") corpo = f ? fichaHtml(f) : `<div class="vazio">Você ainda não tem uma ficha.<br>Peça ao mestre para atribuir uma a você.</div>`;
+  else if (ui.tab === "dados") corpo = dadosHtml();
+  else if (ui.tab === "mesa") corpo = mesaHtml();
+  else corpo = mestreHtml();
+  const e0 = st.rolls[0];
+  const espera = !!e0 && e0.w != null && ui.recv[e0.i] > 0 && Date.now() - ui.recv[e0.i] < 1800;
+  clearTimeout(ui.tm);
+  if (espera) ui.tm = setTimeout(render, 1850 - (Date.now() - ui.recv[e0.i]));
+  const ult = e0 && (ui.tab === "ficha" || ui.tab === "dados") ? `<div class="ult" aria-live="polite">${espera ? `<div><b>${esc(e0.p)}</b> · ${esc(e0.cn)} — ${esc(e0.l)}</div><div>Lançando os dados…</div>` : rolHtml(e0)}</div>` : "";
+  $app.innerHTML = `<nav class="abas">${abas.map(([k, n]) => `<button class="aba ${ui.tab === k ? "on" : ""}" data-a="tab" data-t="${k}">${n}</button>`).join("")}</nav>${corpo}${ult}`;
+  const slot = $app.querySelector("#trayslot");
+  if (slot && f) {
+    sincPrato(f); slot.replaceWith(prato.el);
+    if (prato.rolar) { prato.rolar = false; prato.el.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  }
+  if (fid) { const n = document.getElementById(fid); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch {} } }
+}
+
+document.addEventListener("input", e => {
+  const t = e.target.id;
+  if (t === "dt") ui.dt = e.target.value; else if (t === "mod") ui.mod = e.target.value; else if (t === "lab") ui.lab = e.target.value;
+});
+document.addEventListener("change", e => {
+  const d = e.target.dataset;
+  if (d.change === "filtro") { ui.filtro = e.target.value; render(); }
+  if (d.change === "atrib" && gm()) {
+    const a = { ...st.assign }, ch = e.target.value;
+    if (ch) for (const k in a) if (a[k] === ch) delete a[k];
+    if (ch) a[d.p] = ch; else delete a[d.p];
+    st.assign = a;
+    salvar({ [P + "assign"]: a });
+  }
+});
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-a]"); if (!b) return;
+  const d = b.dataset, f = cur(), c = f && estado(f);
+  const sheet = ["hp", "set", "rset", "sk", "at", "atk", "rest", "ex", "exclr"];
+  if (sheet.includes(d.a) && !f) return;
+  switch (d.a) {
+    case "tab": ui.tab = d.t; render(); window.scrollTo(0, 0); break;
+    case "pick": if (gm()) { curId = d.id; try { localStorage.setItem(P + "atual", curId); } catch {} render(); window.scrollTo(0, 0); } break;
+    case "hp": setChar(f, { [d.k]: Math.max(0, Math.min(f[d.k], c[d.k] + +d.n)) }); salvar(patchChar(f)); break;
+    case "set": setChar(f, { [d.k]: c[d.k] === +d.v ? +d.v - 1 : +d.v }); salvar(patchChar(f)); break;
+    case "rset": setChar(f, { r: c.r === +d.v ? +d.v - 1 : +d.v }); salvar(patchChar(f)); break;
+    case "ex": ui.extra[d.d] = (ui.extra[d.d] + 1) % 4; render(); break;
+    case "exclr": ui.extra = { 4: 0, 6: 0, 8: 0 }; render(); break;
+    case "sk": { const s = f.sk[+d.i]; rolar(s[0], [s[1], s[2]]); break; }
+    case "at": rolar(d.n, [f.at[d.n]]); break;
+    case "atk": { const w = f.armas[+d.i], s = f.sk.find(x => x[0] === w[1]); rolar(`${w[0]} (${w[1]})`, [s[1], s[2]], { dm: w[2], w: +d.i, arco: w[3] === "arco" }); break; }
+    case "rest": st.chars[f.id] = { pv: f.pv, pd: f.pd, r: 0 }; salvar(patchChar(f)); break;
+    case "pm": ui.pool[d.d] = Math.max(0, Math.min(20, (ui.pool[d.d] || 0) + +d.n)); ui.aviso = ""; render(); break;
+    case "poolclr": ui.pool = {}; ui.mod = ""; ui.lab = ""; ui.aviso = ""; render(); break;
+    case "free": {
+      const dados = DADOS.flatMap(x => Array(ui.pool[x] || 0).fill(x));
+      if (!dados.length) { ui.aviso = "Escolha pelo menos um dado."; render(); break; }
+      const mod = parseInt(ui.mod, 10) || 0;
+      rolar(ui.lab.trim() || descPool() + (mod ? " " + sinal(mod) : ""), dados, { free: true, mod });
+      break;
+    }
+    case "limpar": if (gm()) {
+      const patch = {};
+      for (const id of new Set([...st.rolls.map(x => x.pid), player.id])) patch[P + "r." + id] = [];
+      st.rolls = []; salvar(patch);
+    } break;
+  }
+});
+
+async function iniciar() {
+  if (OBR.isAvailable) {
+    player.id = await OBR.player.getId();
+    player.name = (await OBR.player.getName()) || "Jogador";
+    player.role = await OBR.player.getRole();
+    st = lerEstado(await OBR.room.getMetadata());
+    marcar(true);
+    party = await OBR.party.getPlayers();
+    OBR.room.onMetadataChange(md => { st = lerEstado(md); marcar(false); render(); });
+    OBR.party.onChange(ps => { party = ps; render(); });
+  }
+  render();
+}
+if (OBR.isAvailable) OBR.onReady(iniciar); else iniciar();
+</script>
+</body>
+</html>

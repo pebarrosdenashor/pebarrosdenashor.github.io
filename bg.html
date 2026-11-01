@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Fichas (fundo)</title></head>
+<body>
+<script type="module">
+import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3/+esm";
+
+const P = "rpg.fichas/r.";
+
+// Junta as rolagens de todos os jogadores (cada um grava a sua própria lista).
+const todas = md => Object.entries(md || {})
+  .filter(([k]) => k.startsWith(P))
+  .flatMap(([k, v]) => (v || []).map(r => ({ ...r, pid: k.slice(P.length) })));
+
+if (OBR.isAvailable) {
+  OBR.onReady(async () => {
+    const eu = await OBR.player.getId();
+    const vistos = new Set(todas(await OBR.room.getMetadata()).map(r => r.i));
+
+    OBR.room.onMetadataChange(md => {
+      const novas = todas(md).filter(r => !vistos.has(r.i)).sort((a, b) => a.ts - b.ts);
+      for (const r of novas) {
+        vistos.add(r.i);
+        if (r.pid === eu) continue;
+        let txt = `${r.p}${r.cn ? " (" + r.cn + ")" : ""} — ${r.l}: ${r.t}`;
+        if (r.dm != null) txt += ` · dano ${r.dm}`;
+        if (r.dt != null) txt += r.ok ? " · passou" : " · falhou";
+        OBR.notification.show(txt);
+      }
+    });
+  });
+}
+</script>
+</body>
+</html>

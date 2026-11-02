@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diário de Viagem do Malik</title>
+<style>
+@font-face{font-family:"Almendra";src:url(fonts/almendra-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Almendra";src:url(fonts/almendra-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Almendra";src:url(fonts/almendra-latin-700-normal.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"IM Fell";src:url(fonts/im-fell-english-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IM Fell";src:url(fonts/im-fell-english-latin-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Uncial";src:url(fonts/uncial-antiqua-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+
+:root{--ouro:#d2ac55;--ouro2:#8c6a25;--couro:#3a2113;--couro2:#26150b;--perg:#ead9a8;--tinta:#2a1a0d;--vinho:#7a1f1f;
+  --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .08 0 0 0 .55 -.18'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{color:var(--tinta);font:20px/28px "Almendra",Georgia,serif;
+  background:
+   radial-gradient(60% 55% at 12% 8%,rgba(255,170,70,.20),transparent 70%),
+   radial-gradient(120% 100% at 50% 50%,transparent 45%,rgba(0,0,0,.65) 100%),
+   repeating-linear-gradient(90deg,rgba(0,0,0,.10) 0 2px,transparent 2px 9px,rgba(255,220,160,.035) 9px 10px,transparent 10px 23px),
+   linear-gradient(#4a3020,#2b1a10)}
+body::before{content:"";position:fixed;inset:0;background:var(--noise);opacity:.35;pointer-events:none;mix-blend-mode:multiply}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+
+#palco{position:fixed;inset:0 0 56px 0;display:grid;place-items:center;overflow:hidden}
+#escala{width:880px;height:580px;flex:none;transform-origin:center center}
+.livro{position:relative;width:880px;height:580px;perspective:2400px}
+
+/* ---------- capa fechada ---------- */
+.capa{position:absolute;left:220px;top:0;width:440px;height:580px;transform-origin:left center;cursor:pointer;border:0;text-align:center;
+  background:
+   radial-gradient(70% 55% at 50% 38%,rgba(255,200,120,.10),transparent 70%),
+   repeating-linear-gradient(45deg,rgba(0,0,0,.07) 0 2px,transparent 2px 5px),
+   repeating-linear-gradient(-45deg,rgba(255,255,255,.025) 0 2px,transparent 2px 6px),
+   linear-gradient(135deg,#59341d,#2f1b0f 60%,#241309);
+  border-radius:6px 14px 14px 6px;box-shadow:0 26px 50px rgba(0,0,0,.65),inset 0 0 0 2px #170a04,inset 0 0 0 7px rgba(210,172,85,.28),inset 14px 0 18px -8px rgba(0,0,0,.55);
+  transition:transform .9s cubic-bezier(.5,.05,.2,1),opacity .9s ease}
+.capa::before{content:"";position:absolute;inset:16px;border:2px solid rgba(210,172,85,.55);border-radius:4px 10px 10px 4px;box-shadow:inset 0 0 0 5px rgba(0,0,0,.18),inset 0 0 0 6px rgba(210,172,85,.3)}
+.capa::after{content:"";position:absolute;inset:26px;border:1px dashed rgba(230,200,130,.35);border-radius:4px 8px 8px 4px}
+.capa .tit{position:absolute;left:46px;right:46px;top:128px;font:400 40px/46px "Uncial",serif;letter-spacing:1px;text-transform:none;
+  background:linear-gradient(180deg,#f3d98a 0%,#c9a24a 45%,#8a6522 55%,#d9b85e 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 1px rgba(0,0,0,.8))}
+.capa .sub{position:absolute;left:0;right:0;top:318px;font:italic 19px/24px "IM Fell",serif;color:#d9bd7c;opacity:.9;text-shadow:0 1px 1px #000}
+.capa .rosa{position:absolute;left:50%;top:372px;width:96px;height:96px;margin-left:-48px}
+.capa .dica{position:absolute;left:0;right:0;bottom:36px;font:italic 15px "IM Fell",serif;color:#cdb078;opacity:.75}
+.capa .canto{position:absolute;width:46px;height:46px;background:linear-gradient(135deg,#e6c570,#8d6a28);box-shadow:0 1px 2px #000;opacity:.95}
+.capa .c1{left:0;top:0;clip-path:polygon(0 0,100% 0,0 100%);border-radius:6px 0 0 0}
+.capa .c2{right:0;top:0;clip-path:polygon(0 0,100% 0,100% 100%)}
+.capa .c3{left:0;bottom:0;clip-path:polygon(0 0,100% 100%,0 100%)}
+.capa .c4{right:0;bottom:0;clip-path:polygon(100% 0,100% 100%,0 100%)}
+.capa .cinta{position:absolute;right:-18px;top:236px;width:60px;height:96px;background:linear-gradient(90deg,#2b170b,#4a2a16 40%,#2b170b);border-radius:3px;box-shadow:0 3px 6px rgba(0,0,0,.6);border:1px solid #140a04}
+.capa .cinta::after{content:"";position:absolute;right:8px;top:30px;width:26px;height:34px;border:4px solid #c9a24a;border-radius:3px;background:radial-gradient(circle at 50% 40%,#e6c570,#8d6a28);box-shadow:0 1px 3px #000}
+.livro.aberto .capa{transform:rotateY(-168deg);opacity:0;pointer-events:none}
+.livro.fechado .miolo{opacity:0;transform:scale(.5) translateX(0);pointer-events:none}
+
+/* ---------- miolo (duas páginas) ---------- */
+.miolo{position:absolute;inset:0;transition:opacity .7s ease .15s,transform .9s cubic-bezier(.4,.1,.2,1)}
+.base{position:absolute;inset:0;border-radius:12px;
+  background:repeating-linear-gradient(45deg,rgba(0,0,0,.07) 0 2px,transparent 2px 5px),linear-gradient(#4b2d19,#2a170b);
+  box-shadow:0 28px 55px rgba(0,0,0,.7),inset 0 0 0 2px #150903,inset 0 0 0 5px rgba(210,172,85,.3)}
+.base::after{content:"";position:absolute;inset:4px;border:1px dashed rgba(230,200,130,.4);border-radius:9px}
+.pg{position:absolute;top:10px;width:430px;height:560px;overflow:hidden;background:
+   radial-gradient(130% 100% at 50% 45%,transparent 52%,rgba(120,72,22,.38) 100%),
+   radial-gradient(70px 55px at 18% 12%,rgba(150,95,35,.20),transparent 75%),
+   radial-gradient(110px 80px at 84% 80%,rgba(130,78,25,.22),transparent 75%),
+   radial-gradient(34px 30px at 70% 30%,rgba(120,70,20,.14),transparent 75%),
+   var(--noise),linear-gradient(#ecdcab,#dcc38a)}
+.pgL{left:10px;border-radius:5px 2px 2px 5px;box-shadow:inset -34px 0 34px -22px rgba(55,30,8,.65),-1px 0 0 #c9ad72,-2px 1px 0 #a98d55,-3px 2px 0 #c9ad72,-4px 3px 0 #9d8049}
+.pgR{left:440px;border-radius:2px 5px 5px 2px;box-shadow:inset 34px 0 34px -22px rgba(55,30,8,.65),1px 0 0 #c9ad72,2px 1px 0 #a98d55,3px 2px 0 #c9ad72,4px 3px 0 #9d8049}
+.pg .moldura{position:absolute;inset:14px;border:1px solid rgba(90,52,18,.55);box-shadow:0 0 0 3px rgba(234,217,168,.0),inset 0 0 0 4px rgba(90,52,18,.0);pointer-events:none}
+.pg .moldura::before{content:"";position:absolute;inset:3px;border:1px solid rgba(90,52,18,.28)}
+.pg .cab{position:absolute;left:0;right:0;top:20px;text-align:center;font:italic 14px/18px "IM Fell",serif;color:rgba(70,40,12,.55);letter-spacing:.5px;pointer-events:none}
+.pg .num{position:absolute;left:0;right:0;bottom:19px;text-align:center;font:400 16px/20px "Uncial",serif;color:rgba(70,40,12,.7);pointer-events:none}
+.pg .num i{display:inline-block;width:6px;height:6px;margin:0 9px 2px;background:rgba(110,60,20,.6);transform:rotate(45deg)}
+.pg .texto{position:absolute;left:36px;right:36px;top:48px;height:448px;overflow:hidden;
+  background-image:repeating-linear-gradient(transparent 0 27px,rgba(112,70,28,.22) 27px 28px);background-position:0 0}
+.pg .fotos{position:absolute;inset:0;pointer-events:none}
+.pg.vazia .texto{background-image:none}
+.ent{position:relative;margin:0 0 0;color:var(--cor,var(--tinta))}
+.ent .tx{display:block;width:100%;min-height:28px;border:0;background:transparent;resize:none;overflow:hidden;padding:0;margin:0;color:inherit;font:400 20px/28px "Almendra",Georgia,serif;white-space:pre-wrap;word-wrap:break-word;text-shadow:0 0 1px rgba(60,30,5,.25)}
+div.tx{cursor:default;min-height:28px}
+.ent .ass{font:italic 16px/28px "IM Fell",serif;text-align:right;opacity:.85}
+.ent .apaga{position:absolute;right:-4px;top:-2px;width:20px;height:20px;border-radius:50%;font:700 13px/18px Arial,sans-serif;color:#fff;background:rgba(122,31,31,.85);display:none;z-index:3}
+.ent:hover .apaga,.ent:focus-within .apaga{display:block}
+.ent.surge .tx,.ent.surge .ass{animation:escreve 1.6s steps(40,end) both}
+@keyframes escreve{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.ent.surge .ass{animation-delay:1.2s}
+.pg .novo{position:absolute;right:34px;bottom:44px;font:italic 15px "IM Fell",serif;padding:2px 12px;color:#4a2a10;border:1px solid rgba(90,52,18,.55);border-radius:12px;background:rgba(234,217,168,.8);opacity:0;transition:opacity .2s}
+.pg:hover .novo,.pg:focus-within .novo{opacity:1}
+.pg .novo:hover{background:#f4e6bc}
+
+/* fotos coladas */
+.foto{position:absolute;pointer-events:auto;background:#f4ebd2;padding:7px 7px 22px;touch-action:none;user-select:none;cursor:grab;
+  box-shadow:0 4px 7px rgba(40,20,5,.5),0 0 0 1px rgba(90,60,20,.35),inset 0 0 12px rgba(150,110,50,.25)}
+.foto.arrasta{cursor:grabbing;box-shadow:0 12px 18px rgba(40,20,5,.5),0 0 0 1px rgba(90,60,20,.35);z-index:5}
+.foto img{display:block;width:100%;height:auto;pointer-events:none;filter:sepia(.45) contrast(.95) saturate(.8) brightness(.98)}
+.foto .fita{position:absolute;top:-11px;left:50%;width:68px;height:20px;margin-left:-34px;background:rgba(226,206,140,.72);transform:rotate(-4deg);box-shadow:0 1px 2px rgba(0,0,0,.25);clip-path:polygon(2% 4%,98% 0,100% 92%,0 100%);pointer-events:none}
+.foto.outra .fita{transform:rotate(3deg)}
+.foto .legenda{position:absolute;left:8px;right:8px;bottom:2px;font:italic 13px/18px "IM Fell",serif;color:#5a3a1a;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.foto.sel{outline:2px dashed rgba(122,31,31,.8);outline-offset:3px}
+.ferr{position:absolute;left:50%;top:-44px;transform:translateX(-50%) rotate(var(--inv,0deg));display:none;gap:4px;padding:4px;background:rgba(36,21,11,.94);border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,.5);z-index:9}
+.foto.sel .ferr{display:flex}
+.ferr button{width:28px;height:28px;border-radius:6px;color:#f2dca0;font:700 15px/28px Arial,sans-serif;background:#4a2c19;border:1px solid #8c6a25}
+.ferr button:hover{background:#6a4023}
+.ferr .x{background:#7a1f1f}
+
+/* folhas para virar */
+.folha{position:absolute;left:440px;top:10px;width:430px;height:560px;transform-origin:left center;transform-style:preserve-3d;display:none;z-index:6;transition:transform .85s cubic-bezier(.45,.05,.25,1)}
+.folha .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.folha .face .pg{position:absolute;left:0;top:0}
+.folha .verso{transform:rotateY(180deg)}
+.folha::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(40,20,5,.0),rgba(40,20,5,.55));opacity:0;pointer-events:none;animation:sombra .85s ease both}
+@keyframes sombra{0%{opacity:0}50%{opacity:.45}100%{opacity:0}}
+
+.fita-marca{position:absolute;left:640px;top:560px;width:18px;height:74px;z-index:7;cursor:pointer;background:linear-gradient(90deg,#5a1414,#a02a2a 50%,#5a1414);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%);box-shadow:0 2px 3px #000;filter:drop-shadow(0 3px 2px rgba(0,0,0,.6))}
+.fita-marca:hover{filter:brightness(1.2) drop-shadow(0 3px 2px rgba(0,0,0,.6))}
+
+/* guarda (parte de dentro da capa) */
+.guarda{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:60px 56px}
+.guarda .selo{width:150px;height:150px;margin:0 auto 18px}
+.guarda h3{margin:0 0 10px;font:400 26px/32px "Uncial",serif;color:#5a3412}
+.guarda p{margin:0;font:italic 18px/26px "IM Fell",serif;color:#5a3a1c}
+
+/* barra de ferramentas */
+#barra{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 12px;
+  background:linear-gradient(#3a2415,#22130a);border-top:2px solid #6a4a22;box-shadow:0 -6px 14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,220,160,.12);overflow-x:auto}
+.bt{flex:none;padding:5px 14px;font:italic 17px/22px "IM Fell",serif;color:#f1dba2;border:1px solid #8c6a25;border-radius:6px;background:linear-gradient(#5b3a20,#3b2312);box-shadow:inset 0 1px 0 rgba(255,225,160,.18),0 2px 3px rgba(0,0,0,.5);white-space:nowrap}
+.bt:hover{background:linear-gradient(#6e4727,#46291a);color:#fff3c8}
+.bt:disabled{opacity:.4;cursor:default}
+.bt.on{background:linear-gradient(#8c6a25,#5d4416);color:#fff}
+.pagi{flex:none;font:400 15px/22px "Uncial",serif;color:#e1c987;min-width:120px;text-align:center}
+.sep{flex:none;width:1px;height:28px;background:rgba(210,172,85,.3)}
+#tinteiro{flex:none;width:30px;height:38px;cursor:help}
+#link{display:none;gap:6px}
+#link input{width:240px;font:italic 16px "IM Fell",serif;padding:4px 8px;border-radius:5px;border:1px solid #8c6a25;background:#f1e3b8;color:#2a1a0d}
+#aviso{position:fixed;left:50%;top:14px;transform:translate(-50%,-30px);opacity:0;pointer-events:none;transition:all .35s;z-index:30;
+  padding:8px 22px;font:italic 18px/24px "IM Fell",serif;color:#3a210f;background:linear-gradient(#f0e2b6,#dcc486);border:1px solid #8c6a25;border-radius:3px;box-shadow:0 6px 14px rgba(0,0,0,.55);
+  clip-path:polygon(0 8%,3% 0,50% 6%,97% 0,100% 12%,99% 90%,96% 100%,52% 94%,4% 100%,0 88%)}
+#aviso.on{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.capa,.miolo,.folha,#aviso{transition:none}.ent.surge .tx,.ent.surge .ass,.folha::after{animation:none}}
+</style>
+</head>
+<body>
+<div id="palco"><div id="escala">
+  <div class="livro fechado" id="livro">
+    <div class="miolo" id="miolo">
+      <div class="base"></div>
+      <div class="pg pgL" id="pL"></div>
+      <div class="pg pgR" id="pR"></div>
+      <div class="folha" id="folha"><div class="face frente"></div><div class="face verso"></div></div>
+      <button class="fita-marca" id="marca" title="Ir à última página escrita" aria-label="Ir à última página escrita"></button>
+    </div>
+    <button class="capa" id="capa" aria-label="Abrir o diário">
+      <i class="canto c1"></i><i class="canto c2"></i><i class="canto c3"></i><i class="canto c4"></i>
+      <div class="tit">Diário de Viagem do Malik</div>
+      <div class="sub">caminhos, ventos e lembranças</div>
+      <svg class="rosa" viewBox="-50 -50 100 100" aria-hidden="true"><g fill="none" stroke="#c9a24a" stroke-width="2.2"><circle r="44"/><circle r="36" stroke-width="1"/><path d="M0-44V44M-44 0H44" stroke-width="1.4"/><path d="M0-40 8-8 40 0 8 8 0 40-8 8-40 0-8-8Z" fill="#8c6a25" fill-opacity=".55"/><path d="M-27-27 27 27M27-27-27 27" stroke-width=".9"/></g></svg>
+      <div class="dica">toque para abrir</div>
+      <i class="cinta"></i>
+    </button>
+  </div>
+</div></div>
+
+<div id="barra">
+  <button class="bt" id="ant" aria-label="Página anterior">◀ Voltar</button>
+  <div class="pagi" id="pagi">—</div>
+  <button class="bt" id="prox" aria-label="Próxima página">Avançar ▶</button>
+  <i class="sep"></i>
+  <button class="bt" id="escrever">✒ Escrever</button>
+  <button class="bt" id="foto">❖ Colar foto</button>
+  <span id="link"><input id="url" type="url" placeholder="Endereço da imagem…" aria-label="Endereço da imagem"><button class="bt" id="colar">Colar</button></span>
+  <i class="sep"></i>
+  <button class="bt" id="som" aria-pressed="true" title="Som das folhas">Som: sim</button>
+  <button class="bt" id="fechar">Fechar livro</button>
+  <svg id="tinteiro" viewBox="0 0 30 38" aria-label="Espaço do diário"><title>Tinteiro</title>
+    <defs><clipPath id="vidro"><path d="M9 12h12l5 6v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V18z"/></clipPath></defs>
+    <rect x="9" y="3" width="12" height="9" rx="1.5" fill="#c9a24a" stroke="#6a4a22"/>
+    <path d="M9 12h12l5 6v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V18z" fill="#1a1a22" fill-opacity=".35" stroke="#c9a24a" stroke-width="1.5"/>
+    <rect id="tinta" x="0" y="18" width="30" height="20" fill="#0c0c1a" clip-path="url(#vidro)"/></svg>
+</div>
+<div id="aviso" role="status"></div>
+
+<script type="module">
+import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3/+esm";
+
+const P = "rpg.diario/";
+const W = 880, H = 580, ALT_TEXTO = 448, MAX_FOTOS = 4, MAX_SPREADS = 20, LIM_SALA = 15600, LIM_PLAYER = 5600;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const tam = o => new Blob([JSON.stringify(o)]).size;
+const mix = (h, t, k) => { const a = parseInt(h.slice(1), 16), b = parseInt(t.slice(1), 16), c = s => Math.round(((a >> s) & 255) * (1 - k) + ((b >> s) & 255) * k); return "#" + [16, 8, 0].map(s => c(s).toString(16).padStart(2, "0")).join(""); };
+const reduz = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let st = { w: {} };                       // um registro por jogador: { n: nome, c: cor, v: versão, e: [[id, pág, texto, ts]], f: [[id, pág, url, x, y, rot, larg, ts, prop, legenda]] }
+let eu = { id: "local", name: "Viajante", role: "PLAYER", color: "#8a5a2b" };
+const ui = { aberto: false, spread: 0, sel: null, foco: null, som: true, md: {}, carga: true, virando: false };
+const sujo = new Set();                   // jogadores com alterações ainda não enviadas
+const tm = {};
+try { const s = JSON.parse(localStorage.getItem(P + "ui") || "{}"); ui.aberto = !!s.aberto; ui.spread = s.spread | 0; ui.som = s.som !== false; } catch {}
+const guardaUi = () => { try { localStorage.setItem(P + "ui", JSON.stringify({ aberto: ui.aberto, spread: ui.spread, som: ui.som })); } catch {} };
+const gm = () => eu.role === "GM";
+
+// ---------- estado ----------
+function lerEstado(md) {
+  const o = { w: {} };
+  for (const [k, v] of Object.entries(md || {})) if (k.startsWith(P + "w.") && v && typeof v === "object") o.w[k.slice(P.length + 2)] = v;
+  return o;
+}
+const regs = () => Object.entries(st.w);
+const entradas = n => regs().flatMap(([pid, w]) => (w.e || []).filter(x => x[1] === n).map(x => ({ id: x[0], t: x[2], ts: x[3], pid, nome: w.n || "Viajante", cor: w.c || "#8a5a2b" }))).sort((a, b) => a.ts - b.ts);
+const fotos = n => regs().flatMap(([pid, w]) => (w.f || []).filter(x => x[1] === n).map(x => ({ id: x[0], url: x[2], x: x[3], y: x[4], rot: x[5], l: x[6], ts: x[7], ar: x[8], leg: x[9] || "", pid, nome: w.n || "Viajante" }))).sort((a, b) => a.ts - b.ts);
+const ultima = () => { let m = 1; for (const [, w] of regs()) { for (const x of w.e || []) if ((x[2] || "").trim()) m = Math.max(m, x[1]); for (const x of w.f || []) m = Math.max(m, x[1]); } return m; };
+const maxSpread = () => Math.min(MAX_SPREADS, Math.floor(ultima() / 2) + 1);
+const podeEditar = pid => pid === eu.id || gm();
+
+// Altera os dados de um jogador (normalmente os meus) e agenda o envio. Recusa se estourar o espaço.
+function mut(pid, fn, agora) {
+  const w0 = st.w[pid] || { n: eu.name, c: eu.color, v: 0, e: [], f: [] };
+  const w = JSON.parse(JSON.stringify(w0));
+  if (pid === eu.id) { w.n = eu.name; w.c = eu.color; }
+  w.e = w.e || []; w.f = w.f || [];
+  if (fn(w) === false) return false;
+  w.v = (w0.v || 0) + 1;
+  if (tam(w) > LIM_PLAYER || tam({ ...ui.md, [P + "w." + pid]: w }) > LIM_SALA) { aviso("O diário está cheio: não cabe mais tinta."); return false; }
+  st.w[pid] = w; ui.md[P + "w." + pid] = w;
+  sujo.add(pid);
+  clearTimeout(tm[pid]); tm[pid] = setTimeout(() => enviar(pid), agora ? 0 : 650);
+  return true;
+}
+async function enviar(pid) {
+  if (!sujo.has(pid)) return;
+  sujo.delete(pid);
+  const w = st.w[pid];
+  if (!OBR.isAvailable) { try { localStorage.setItem(P + "local", JSON.stringify(st.w)); } catch {} return; }
+  try { await OBR.room.setMetadata({ [P + "w." + pid]: w }); }
+  catch (e) { aviso("Não foi possível gravar: " + (e?.message || e)); }
+}
+const enviarTudo = () => { for (const pid of [...sujo]) { clearTimeout(tm[pid]); enviar(pid); } };
+addEventListener("pagehide", enviarTudo);
+
+let avTm = null;
+function aviso(t) { const a = $("aviso"); a.textContent = t; a.classList.add("on"); clearTimeout(avTm); avTm = setTimeout(() => a.classList.remove("on"), 2600); }
+
+// ---------- som das folhas ----------
+let AC = null;
+function folhaSom() {
+  if (!ui.som) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === "suspended") AC.resume();
+    const t = AC.currentTime, b = AC.createBuffer(1, AC.sampleRate * .5, AC.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 1.6);
+    const s = AC.createBufferSource(); s.buffer = b;
+    const f = AC.createBiquadFilter(); f.type = "bandpass"; f.Q.value = .7; f.frequency.setValueAtTime(900, t); f.frequency.exponentialRampToValueAtTime(3800, t + .45);
+    const g = AC.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(.35, t + .08); g.gain.exponentialRampToValueAtTime(.0001, t + .5);
+    s.connect(f); f.connect(g); g.connect(AC.destination); s.start(t);
+  } catch {}
+}
+
+// ---------- páginas ----------
+const GUARDA = `<div class="guarda"><div><svg class="selo" viewBox="-50 -50 100 100" aria-hidden="true"><g fill="none" stroke="#7a1f1f" stroke-width="2.4"><circle r="44" fill="#7a1f1f" fill-opacity=".14"/><circle r="38" stroke-width="1"/><path d="M0-30 7-7 30 0 7 7 0 30-7 7-30 0-7-7Z" fill="#7a1f1f" fill-opacity=".5"/><circle r="4" fill="#7a1f1f"/></g></svg>
+<h3>Este diário pertence a Malik</h3><p>andarilho de longos caminhos.<br>Quem o encontrar, leia com respeito<br>e escreva com honestidade.</p></div></div>`;
+
+function montar(el, n) {
+  el.dataset.n = n;
+  el.className = "pg " + (el.classList.contains("pgL") ? "pgL" : "pgR") + (n === 0 ? " vazia" : "");
+  if (n === 0) { el.innerHTML = `<div class="moldura"></div>${GUARDA}`; return; }
+  el.innerHTML = `<div class="moldura"></div><div class="cab">Diário de Viagem do Malik</div><div class="texto"></div><div class="fotos"></div><button class="novo" data-a="novo">✒ escrever aqui</button><div class="num"><i></i>${n}<i></i></div>`;
+  sinc(el);
+}
+function criaEnt(e) {
+  const d = document.createElement("div");
+  d.className = "ent"; d.dataset.id = e.id; d.dataset.pid = e.pid;
+  return d;
+}
+function ajusta(ta) { ta.style.height = "auto"; ta.style.height = Math.max(28, ta.scrollHeight) + "px"; }
+function atualizaEnt(d, e) {
+  const ed = podeEditar(e.pid);
+  d.style.setProperty("--cor", mix(e.cor, "#1c1208", .55));
+  let tx = d.querySelector(".tx");
+  if (!tx || (tx.tagName === "TEXTAREA") !== ed) {
+    d.innerHTML = ed ? `<textarea class="tx" rows="1" maxlength="900" spellcheck="true" aria-label="Escrever no diário"></textarea><button class="apaga" data-a="apaga" title="Apagar este trecho" aria-label="Apagar este trecho">×</button><div class="ass"></div>`
+      : `<div class="tx"></div><div class="ass"></div>`;
+    tx = d.querySelector(".tx");
+  }
+  if (document.activeElement !== tx) { if (ed) { if (tx.value !== e.t) tx.value = e.t; tx.dataset.prev = tx.value; ajusta(tx); } else if (tx.textContent !== e.t) tx.textContent = e.t; }
+  const ass = d.querySelector(".ass"), nome = "— " + e.nome;
+  if (ass.textContent !== nome) ass.textContent = nome;
+}
+function sinc(el) {
+  const n = +el.dataset.n; if (!n) return;
+  const tx = el.querySelector(".texto"), fo = el.querySelector(".fotos"), ents = entradas(n);
+  ents.forEach(e => { if (!e.t && e.pid !== eu.id) ents.splice(ents.indexOf(e), 1); });
+  [...tx.children].forEach(c => { if (!ents.some(e => e.id === c.dataset.id)) c.remove(); });
+  ents.forEach((e, i) => {
+    let c = [...tx.children].find(x => x.dataset.id === e.id);
+    if (!c) { c = criaEnt(e); if (!ui.carga && e.pid !== eu.id && !reduz) c.classList.add("surge"); }
+    if (tx.children[i] !== c) tx.insertBefore(c, tx.children[i] || null);
+    atualizaEnt(c, e);
+  });
+  const fs = fotos(n);
+  [...fo.children].forEach(c => { if (!fs.some(f => f.id === c.dataset.id)) c.remove(); });
+  fs.forEach((f, i) => {
+    let c = [...fo.children].find(x => x.dataset.id === f.id);
+    if (!c) { c = document.createElement("figure"); c.className = "foto"; c.dataset.id = f.id; c.dataset.pid = f.pid; c.innerHTML = `<i class="fita"></i><img alt="" draggable="false"><div class="legenda"></div><div class="ferr"></div>`; c.style.margin = "0"; }
+    if (fo.children[i] !== c) fo.insertBefore(c, fo.children[i] || null);
+    const img = c.querySelector("img"); if (img.getAttribute("src") !== f.url) img.src = f.url;
+    if (!c.classList.contains("arrasta")) { c.style.left = f.x + "%"; c.style.top = f.y + "%"; }
+    c.style.width = f.l + "%"; c.style.transform = `rotate(${f.rot}deg)`;
+    c.classList.toggle("outra", i % 2 === 1); c.classList.toggle("sel", ui.sel === f.id);
+    c.querySelector(".legenda").textContent = f.leg || f.nome;
+    const fe = c.querySelector(".ferr");
+    fe.innerHTML = podeEditar(f.pid) ? `<button data-a="rot" data-d="-8" title="Girar para a esquerda" aria-label="Girar para a esquerda">↺</button><button data-a="rot" data-d="8" title="Girar para a direita" aria-label="Girar para a direita">↻</button><button data-a="tam" data-d="-5" title="Menor" aria-label="Menor">−</button><button data-a="tam" data-d="5" title="Maior" aria-label="Maior">+</button><button class="x" data-a="tira" title="Tirar a foto" aria-label="Tirar a foto">×</button>` : "";
+    fe.style.setProperty("--inv", -f.rot + "deg");
+  });
+}
+const paginas = () => [...document.querySelectorAll(".pg[data-n]")];
+function sincTudo() { for (const el of document.querySelectorAll("#miolo .pg:not(.vazia)")) if (!$("folha").contains(el)) sinc(el); rotulo(); tinteiro(); }
+
+function rotulo() {
+  const a = ui.spread * 2, b = a + 1;
+  $("pagi").textContent = ui.spread === 0 ? `Guarda · pág. 1` : `Págs. ${a} e ${b}`;
+  $("ant").disabled = ui.spread <= 0 || ui.virando; $("prox").disabled = ui.spread >= maxSpread() || ui.virando;
+}
+function tinteiro() {
+  const usado = tam(ui.md), f = Math.max(0, Math.min(1, 1 - usado / 16384));
+  const h = 20 * f; $("tinta").setAttribute("y", 38 - h); $("tinta").setAttribute("height", h + 2);
+  $("tinteiro").querySelector("title").textContent = `Tinteiro: ${Math.round(f * 100)}% de tinta (a sala usa ${(usado / 1024).toFixed(1)} kB de 16 kB, divididos com outras extensões)`;
+}
+
+function mostrarSpread() { ui.foco = null; montar($("pL"), ui.spread * 2); montar($("pR"), ui.spread * 2 + 1); ui.sel = null; rotulo(); }
+
+function virar(delta) {
+  if (ui.virando || !ui.aberto) return;
+  const alvo = Math.max(0, Math.min(maxSpread(), ui.spread + delta));
+  if (alvo === ui.spread) return;
+  document.activeElement && document.activeElement.blur && document.activeElement.blur();
+  enviarTudo();
+  const j = Math.min(ui.spread, alvo), fw = delta > 0, fl = $("folha");
+  if (reduz) { ui.spread = alvo; mostrarSpread(); guardaUi(); return; }
+  ui.virando = true; rotulo(); folhaSom();
+  montar($("pL"), 2 * j); montar($("pR"), 2 * j + 3);
+  const fr = fl.querySelector(".frente"), vs = fl.querySelector(".verso");
+  fr.innerHTML = `<div class="pg pgR"></div>`; vs.innerHTML = `<div class="pg pgL"></div>`;
+  montar(fr.firstChild, 2 * j + 1); montar(vs.firstChild, 2 * j + 2);
+  fl.style.transition = "none"; fl.style.transform = `rotateY(${fw ? 0 : -180}deg)`; fl.style.display = "block";
+  fl.classList.remove("anim"); void fl.offsetWidth; fl.style.animation = "none"; void fl.offsetWidth; fl.style.animation = "";
+  requestAnimationFrame(() => requestAnimationFrame(() => { fl.style.transition = ""; fl.style.transform = `rotateY(${fw ? -180 : 0}deg)`; }));
+  setTimeout(() => { ui.spread = alvo; mostrarSpread(); fl.style.display = "none"; ui.virando = false; rotulo(); guardaUi(); }, 900);
+}
+
+function abrir(v) {
+  ui.aberto = v; guardaUi();
+  const l = $("livro"); l.classList.toggle("aberto", v); l.classList.toggle("fechado", !v);
+  if (v) { mostrarSpread(); folhaSom(); }
+  $("escrever").disabled = $("foto").disabled = $("marca").disabled = !v;
+}
+
+// ---------- ações ----------
+function paginaFoco() { const a = ui.spread * 2; return ui.foco >= 1 && (ui.foco === a || ui.foco === a + 1) ? ui.foco : a + 1; }
+function elPagina(n) { return document.querySelector(`#miolo > .pg[data-n="${n}"]`); }
+function escrever(n) {
+  if (!ui.aberto || ui.virando) return;
+  n = n || paginaFoco();
+  const el = elPagina(n); if (!el) return;
+  const tx = el.querySelector(".texto");
+  const vazia = entradas(n).find(e => e.pid === eu.id && !e.t);
+  if (vazia) { tx.querySelector(`[data-id="${vazia.id}"] textarea`)?.focus(); return; }
+  const usado = [...tx.children].reduce((s, c) => s + c.offsetHeight, 0);
+  if (usado > ALT_TEXTO - 56) { aviso("Esta página está cheia. Vire a folha."); return; }
+  const id = uid();
+  if (mut(eu.id, w => { w.e.push([id, n, "", Date.now()]); })) { sinc(el); const t = tx.querySelector(`[data-id="${id}"] textarea`); t && t.focus(); }
+}
+function adicionarFoto(url, lw, lh) {
+  if (!/^https?:\/\//i.test(url) || url.length > 360) { aviso("Esse endereço de imagem não serve."); return; }
+  const n = paginaFoco();
+  if (n < 1) return;
+  if (fotos(n).length >= MAX_FOTOS) { aviso("Cabem só " + MAX_FOTOS + " fotos por página."); return; }
+  const ar = lw && lh ? Math.max(.5, Math.min(1.7, lh / lw)) : .75, id = uid();
+  const ok = mut(eu.id, w => { w.f.push([id, n, url, 10 + Math.round(Math.random() * 36), 28 + Math.round(Math.random() * 30), Math.round(Math.random() * 16 - 8), 42, Date.now(), +ar.toFixed(2), ""]); }, true);
+  if (ok) { ui.sel = id; const el = elPagina(n); el && sinc(el); }
+}
+async function colarFoto() {
+  if (!ui.aberto) return;
+  if (!OBR.isAvailable) { $("link").style.display = "flex"; $("url").focus(); return; }
+  try {
+    const r = await OBR.assets.downloadImages(false, undefined, "PROP");
+    if (r && r.length) adicionarFoto(r[0].image.url, r[0].image.width, r[0].image.height);
+  } catch { $("link").style.display = "flex"; }
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-a]");
+  if (!b) { if (ui.sel && !e.target.closest(".foto")) { ui.sel = null; sincTudo(); } return; }
+  const pg = b.closest(".pg[data-n]"), n = pg ? +pg.dataset.n : 0;
+  const ent = b.closest(".ent"), fig = b.closest(".foto");
+  switch (b.dataset.a) {
+    case "novo": escrever(n); break;
+    case "apaga": if (ent) { mut(ent.dataset.pid, w => { w.e = w.e.filter(x => x[0] !== ent.dataset.id); }, true); sinc(pg); } break;
+    case "rot": if (fig) { mut(fig.dataset.pid, w => { const f = w.f.find(x => x[0] === fig.dataset.id); f[5] = Math.max(-40, Math.min(40, f[5] + +b.dataset.d)); }, true); sinc(pg); } break;
+    case "tam": if (fig) { mut(fig.dataset.pid, w => { const f = w.f.find(x => x[0] === fig.dataset.id); f[6] = Math.max(18, Math.min(75, f[6] + +b.dataset.d)); }, true); sinc(pg); } break;
+    case "tira": if (fig) { mut(fig.dataset.pid, w => { w.f = w.f.filter(x => x[0] !== fig.dataset.id); }, true); ui.sel = null; sinc(pg); } break;
+  }
+});
+document.addEventListener("focusin", e => { const pg = e.target.closest && e.target.closest("#miolo > .pg[data-n]"); if (pg) ui.foco = +pg.dataset.n; });
+document.addEventListener("pointerdown", e => {
+  const pg = e.target.closest && e.target.closest("#miolo > .pg[data-n]"); if (pg) ui.foco = +pg.dataset.n;
+  const fig = e.target.closest(".foto"); if (!fig || e.target.closest(".ferr")) return;
+  const pgel = fig.closest(".pg"), n = +pgel.dataset.n;
+  if (ui.sel !== fig.dataset.id) { ui.sel = fig.dataset.id; sinc(pgel); }
+  if (!podeEditar(fig.dataset.pid)) return;
+  const r = pgel.getBoundingClientRect(), x0 = parseFloat(fig.style.left), y0 = parseFloat(fig.style.top), px = e.clientX, py = e.clientY;
+  let mov = false;
+  fig.setPointerCapture(e.pointerId);
+  const mv = ev => {
+    const dx = (ev.clientX - px) / r.width * 100, dy = (ev.clientY - py) / r.height * 100;
+    if (!mov && Math.hypot(ev.clientX - px, ev.clientY - py) < 3) return;
+    mov = true; fig.classList.add("arrasta");
+    fig.style.left = Math.max(-6, Math.min(84, x0 + dx)) + "%"; fig.style.top = Math.max(-4, Math.min(86, y0 + dy)) + "%";
+  };
+  const up = () => {
+    fig.removeEventListener("pointermove", mv); fig.removeEventListener("pointerup", up); fig.removeEventListener("pointercancel", up);
+    fig.classList.remove("arrasta");
+    if (mov) { const x = Math.round(parseFloat(fig.style.left)), y = Math.round(parseFloat(fig.style.top)); mut(fig.dataset.pid, w => { const f = w.f.find(q => q[0] === fig.dataset.id); if (f) { f[3] = x; f[4] = y; f[7] = Date.now(); } }, true); }
+    sinc(pgel);
+  };
+  fig.addEventListener("pointermove", mv); fig.addEventListener("pointerup", up); fig.addEventListener("pointercancel", up);
+});
+document.addEventListener("input", e => {
+  const ta = e.target; if (!ta.matches || !ta.matches("textarea.tx")) return;
+  const ent = ta.closest(".ent"), pg = ta.closest(".pg"), tx = pg.querySelector(".texto");
+  ajusta(ta);
+  if (tx.scrollHeight > tx.clientHeight + 1) { ta.value = ta.dataset.prev || ""; ajusta(ta); aviso("A página está cheia. Vire a folha para continuar."); return; }
+  ta.dataset.prev = ta.value;
+  mut(ent.dataset.pid, w => { const x = w.e.find(q => q[0] === ent.dataset.id); if (x) { x[2] = ta.value; x[3] = x[3]; } });
+});
+document.addEventListener("focusout", e => {
+  const ta = e.target; if (!ta.matches || !ta.matches("textarea.tx")) return;
+  const ent = ta.closest(".ent"); if (!ent) return;
+  const pid = ent.dataset.pid;
+  if (!ta.value.trim()) { mut(pid, w => { w.e = w.e.filter(x => x[0] !== ent.dataset.id); }, true); const pg = ta.closest(".pg"); setTimeout(() => pg && pg.isConnected && sinc(pg), 0); }
+  else { clearTimeout(tm[pid]); enviar(pid); }
+});
+document.addEventListener("keydown", e => {
+  if (e.target.matches && e.target.matches("textarea,input")) return;
+  if (e.key === "ArrowRight") virar(1); else if (e.key === "ArrowLeft") virar(-1);
+});
+
+$("capa").addEventListener("click", () => abrir(true));
+$("fechar").addEventListener("click", () => { enviarTudo(); abrir(false); });
+$("ant").addEventListener("click", () => virar(-1));
+$("prox").addEventListener("click", () => virar(1));
+$("escrever").addEventListener("click", () => escrever());
+$("foto").addEventListener("click", colarFoto);
+$("colar").addEventListener("click", () => { const u = $("url").value.trim(); if (u) { adicionarFoto(u); $("url").value = ""; $("link").style.display = "none"; } });
+$("url").addEventListener("keydown", e => { if (e.key === "Enter") $("colar").click(); });
+$("marca").addEventListener("click", () => { const alvo = Math.floor(ultima() / 2); if (alvo !== ui.spread) virar(alvo - ui.spread); });
+$("som").addEventListener("click", () => { ui.som = !ui.som; $("som").textContent = "Som: " + (ui.som ? "sim" : "não"); $("som").setAttribute("aria-pressed", ui.som); guardaUi(); if (ui.som) folhaSom(); });
+
+// ajusta o tamanho do livro à janela
+function escala() {
+  const e = $("escala"), pa = $("palco"), s = Math.min(1, (pa.clientWidth - 24) / (W + 30), (pa.clientHeight - 12) / (H + 20));
+  e.style.transform = `scale(${s})`;
+}
+addEventListener("resize", escala);
+
+// ---------- início ----------
+function aoMudar(md) {
+  ui.md = md || {};
+  const novo = lerEstado(md);
+  for (const [pid, w] of Object.entries(novo.w)) {
+    const atual = st.w[pid];
+    if (pid === eu.id && atual && ((atual.v || 0) >= (w.v || 0) || sujo.has(pid))) continue; // eco do que eu mesmo gravei
+    st.w[pid] = w;
+  }
+  for (const pid of Object.keys(st.w)) if (!(P + "w." + pid in ui.md) && !sujo.has(pid) && OBR.isAvailable) delete st.w[pid];
+  if (ui.spread > maxSpread()) { ui.spread = maxSpread(); if (ui.aberto) mostrarSpread(); }
+  if (ui.aberto && !ui.virando) sincTudo(); else tinteiro();
+  ui.carga = false;
+}
+async function iniciar() {
+  if (OBR.isAvailable) {
+    eu.id = await OBR.player.getId();
+    eu.name = (await OBR.player.getName()) || "Viajante";
+    eu.role = await OBR.player.getRole();
+    try { eu.color = (await OBR.player.getColor()) || eu.color; } catch {}
+    ui.md = await OBR.room.getMetadata();
+    st = lerEstado(ui.md);
+    OBR.room.onMetadataChange(aoMudar);
+    OBR.player.onChange(p => { if (p.name) eu.name = p.name; if (p.color) eu.color = p.color; });
+  } else {
+    try { st.w = JSON.parse(localStorage.getItem(P + "local") || "{}"); ui.md = Object.fromEntries(Object.entries(st.w).map(([k, v]) => [P + "w." + k, v])); } catch {}
+  }
+  $("som").textContent = "Som: " + (ui.som ? "sim" : "não");
+  ui.spread = Math.min(ui.spread, maxSpread());
+  escala();
+  abrir(ui.aberto);
+  if (!ui.aberto) { $("escrever").disabled = $("foto").disabled = $("marca").disabled = true; }
+  sincTudo();
+  setTimeout(() => { ui.carga = false; }, 800);
+}
+if (OBR.isAvailable) OBR.onReady(iniciar); else iniciar();
+</script>
+</body>
+</html>

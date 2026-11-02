@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Diário — fundo</title></head>
+<body>
+<script type="module">
+import OBR from "https://cdn.jsdelivr.net/npm/@owlbear-rodeo/sdk@3/+esm";
+const P = "rpg.diario/w.";
+let eu = null, antes = null;
+
+// Resume cada página: ids das entradas com texto e ids das fotos.
+function resumo(md) {
+  const r = {};
+  for (const [k, v] of Object.entries(md || {})) {
+    if (!k.startsWith(P) || !v || typeof v !== "object") continue;
+    const ent = new Set((v.e || []).filter(x => (x[2] || "").trim()).map(x => x[0]));
+    const fot = new Set((v.f || []).map(x => x[0]));
+    r[k.slice(P.length)] = { n: v.n || "Alguém", ent, fot };
+  }
+  return r;
+}
+
+OBR.onReady(async () => {
+  eu = await OBR.player.getId();
+  antes = resumo(await OBR.room.getMetadata());
+  OBR.room.onMetadataChange(md => {
+    const agora = resumo(md);
+    for (const [pid, d] of Object.entries(agora)) {
+      if (pid === eu) continue;
+      const a = antes[pid];
+      if (!a) continue; // primeira vez que vemos: não notifica o histórico
+      const novaFoto = [...d.fot].some(i => !a.fot.has(i));
+      const novaEnt = [...d.ent].some(i => !a.ent.has(i));
+      if (novaFoto) OBR.notification.show(`📜 ${d.n} colou uma imagem no Diário do Malik.`, "DEFAULT").catch(() => {});
+      else if (novaEnt) OBR.notification.show(`✒️ ${d.n} escreveu no Diário do Malik.`, "DEFAULT").catch(() => {});
+    }
+    antes = agora;
+  });
+});
+</script>
+</body></html>

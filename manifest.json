@@ -1,0 +1,14 @@
+{
+  "name": "Ficha Ordem Paranormal",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "action": {
+    "title": "Fichas de Ordem Paranormal",
+    "icon": "https://pebarrosdenashor.github.io/ficha-ordem-paranormal/icon.svg",
+    "popover": "https://pebarrosdenashor.github.io/ficha-ordem-paranormal/index.html",
+    "height": 760,
+    "width": 460
+  },
+  "author": "pebarrosdenashor",
+  "description": "Fichas de personagem de Ordem Paranormal RPG. Cada jogador vê só as próprias fichas; o mestre vê e gerencia todas."
+}
